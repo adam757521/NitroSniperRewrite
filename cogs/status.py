@@ -20,31 +20,31 @@ class Status(commands.Cog):
         embed = discord.Embed(
             title=f"Code {code}",
             description=f"Showing code information ({code})",
-            color=0x00ff00
+            color=0x00FF00,
         )
 
         embed.add_field(
             name="Receiver",
             value=f"ID: {code_response.receiver.id}, Tag: {code_response.receiver}",
-            inline=False
+            inline=False,
         )
 
         embed.add_field(
             name="Message Information",
             value=f"Author: {code_response.message.author}, Guild: {code_response.message.guild}",
-            inline=False
+            inline=False,
         )
 
         embed.add_field(
             name="Ping",
             value=f"Time until API response: {round(code_response.request_time * 1000)}MS",
-            inline=False
+            inline=False,
         )
 
         embed.add_field(
             name="Response",
             value=f"Server Response: {code_response.response.server_response}, Nitro Type: {code_response.response.nitro_type}",
-            inline=False
+            inline=False,
         )
 
         await ctx.send(embed=embed)
@@ -54,7 +54,7 @@ class Status(commands.Cog):
         embed = discord.Embed(
             title="Connected Accounts.",
             description="Shows a list of connected accounts.",
-            color=0x00ff00
+            color=0x00FF00,
         )
 
         user_information = defaultdict(lambda: [])
