@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import asyncio
+import logging
+import os
 import re
 import sys
 import time
@@ -83,7 +85,7 @@ class SniperBot(commands.Bot):
                 code_response = await self.main.self_bot_utils.redeem_gift(code)
 
                 custom_response = CustomNitroResponse(
-                    code_response, message, time.time() - start
+                    code_response, message, time.time() - start, self.user
                 )
                 self.main.cache[code] = custom_response
 
@@ -120,10 +122,33 @@ class MainSniperBot(SniperBot):
 
     def __init__(self, token: str) -> None:
         super().__init__(token, self)
+        self.load_cogs("cogs")
 
         self.alts = []
         self.cache = {}
         self.self_bot_utils = selfbotUtils.Client(token, state=self._connection)
+
+    def load_cogs(self, directory: str) -> None:
+        """
+        Loads all the cogs in the directory.
+
+        :param str directory: The directory
+        :return: None
+        :rtype: None
+        """
+
+        for file in os.listdir(directory):
+            if not file.endswith(".py") or file.startswith("__"):
+                continue
+
+            try:
+                self.load_extension(f'{directory}.{file.replace(".py", "")}')
+                logging.info(f"Loaded cog {file}")
+            except Exception as e:
+                logging.critical(
+                    f"An exception has been raised when loading cog {file}"
+                )
+                raise e
 
     def create_alts(self, tokens: List[str]) -> List[SniperBot]:
         """

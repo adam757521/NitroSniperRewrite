@@ -14,20 +14,22 @@ class CustomNitroResponse:
     Represents a CustomNitroResponse.
     """
 
-    __slots__ = ("server_response", "message", "request_time")
+    __slots__ = ("response", "message", "request_time", "receiver")
 
     def __init__(
         self,
-        server_response: NitroResponse,
+        response: NitroResponse,
         message: discord.Message,
         request_time: float,
+        receiver: discord.User,
     ) -> None:
-        self.server_response = server_response
+        self.response = response
         self.message = message
         self.request_time = request_time
+        self.receiver = receiver
 
     def __str__(self):
-        return f"<{self.__class__.__name__} server_response={self.server_response}>"
+        return f"<{self.__class__.__name__} response={self.response}>"
 
     def __repr__(self):
-        return f"<{self.__class__.__name__} server_response={self.server_response}, message={self.message}>"
+        return f"<{self.__class__.__name__} response={self.response}, message={self.message}, receiver={self.receiver}>"
