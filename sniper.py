@@ -8,8 +8,11 @@ import sys
 import time
 from typing import List
 
+import aiohttp
 import discord
 import selfbotUtils
+from selfbotUtils import NitroServerResponse
+
 import constants
 
 from discord.ext import commands
@@ -57,6 +60,71 @@ class SniperBot(commands.Bot):
     async def on_ready(self):
         print(f"{self.user} is ready.")
 
+    @staticmethod
+    async def send_webhook_alert(response: CustomNitroResponse) -> None:
+        """
+        |coro|
+
+        Sends embed information about the response to the webhook.
+
+        :param CustomNitroResponse response: The nitro response.
+        :return: None
+        :rtype: None
+        """
+
+        webhook_url = constants.Webhook.URL
+
+        if webhook_url:
+            response_filter = constants.Webhook.FILTER
+            if response_filter and response.response.server_response not in response_filter:
+                return
+
+            embed = discord.Embed(
+                title="Nitro Alert",
+                color=0x00ff00
+            )
+
+            embed.add_field(
+                name="Server Response",
+                value=str(response.response.server_response),
+                inline=False
+            )
+
+            embed.add_field(
+                name="Author",
+                value=str(response.message.author),
+                inline=False
+            )
+
+            embed.add_field(
+                name="Guild",
+                value=response.message.guild and response.message.guild.name,
+                inline=False
+            )
+
+            embed.add_field(
+                name="Receiver",
+                value=str(response.receiver),
+                inline=False
+            )
+
+            embed.add_field(
+                name="Response Time",
+                value=f"{round(response.request_time * 1000)}ms",
+                inline=False
+            )
+
+            if response.response.server_response == NitroServerResponse.CLAIMED:
+                embed.add_field(
+                    name="Nitro Type",
+                    value=response.response.nitro_type,
+                    inline=False
+                )
+
+            async with aiohttp.ClientSession() as session:
+                webhook = discord.Webhook.from_url(webhook_url, adapter=discord.AsyncWebhookAdapter(session))
+                await webhook.send(embed=embed)
+
     async def on_message(self, message):
         codes = self.find_codes(
             message.content
@@ -89,7 +157,11 @@ class SniperBot(commands.Bot):
                 )
                 self.main.cache[code] = custom_response
 
+                if custom_response.response.server_response == NitroServerResponse.UNKNOWN:
+                    print(NitroServerResponse.response.raw)
+
                 print(custom_response, message.author, code)
+                await self.send_webhook_alert(custom_response)
 
     async def start_bot(self) -> None:
         """
