@@ -91,6 +91,8 @@ class SniperBot(commands.Bot):
 
     async def start_bot(self) -> None:
         """
+        |coro|
+
         Runs the bot with the bot token.
 
         :return: None
