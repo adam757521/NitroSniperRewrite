@@ -2,8 +2,11 @@ from __future__ import annotations
 
 import asyncio
 import re
+import sys
 import time
 from typing import List
+
+import discord
 import selfbotUtils
 import constants
 
@@ -94,7 +97,12 @@ class SniperBot(commands.Bot):
         :rtype: None
         """
 
-        await super().start(self.token)
+        try:
+            await super().start(self.token)
+        except discord.LoginFailure:
+            print("An invalid token has been passed.")
+            await self.main.self_bot_utils.close()
+            sys.exit(1)
 
 
 class MainSniperBot(SniperBot):

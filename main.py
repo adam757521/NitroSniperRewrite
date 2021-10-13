@@ -15,4 +15,7 @@ if __name__ == "__main__":
     for alt in main_account.alts:
         loop.create_task(alt.start_bot())
 
-    loop.run_forever()
+    try:
+        loop.run_forever()
+    except KeyboardInterrupt:
+        pass
