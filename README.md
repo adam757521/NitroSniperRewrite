@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-   A discord nitro code sniper written in python, using selfbotUtils.
+   A discord nitro code sniper written in python, using selfbotUtils, that does not phoneban!
 </p>
 
 Features
@@ -14,6 +14,11 @@ Features
 - Configuration.
 - Cached Codes.
 - Alt Support (Redeems codes on main account).
+- Webhook alerts configuration
+- Auto detects fake codes.
+- Does not phoneban the main account.
+- Useful commands (history, accounts, stats, etc)
+- Easy custom cog support (Add cogs to the cogs folder).
 
 Installation
 -------------
