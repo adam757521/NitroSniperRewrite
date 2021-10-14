@@ -203,7 +203,7 @@ class MainSniperBot(SniperBot):
         :rtype: None
         """
 
-        for file in os.listdir(str(pathlib.Path(__file__).parent.resolve()) + "\\cogs"):
+        for file in os.listdir(str(pathlib.Path(__file__).parent.resolve()) + "/cogs"):
             if not file.endswith(".py") or file.startswith("__"):
                 continue
 
