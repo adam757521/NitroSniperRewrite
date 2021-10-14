@@ -13,7 +13,7 @@ import discord
 import selfbotUtils
 from selfbotUtils import NitroServerResponse
 
-from sniper.constants import Delay, Webhook
+from .constants import Delay, Webhook
 from discord.ext import commands
 
 from .nitro import CustomNitroResponse
@@ -208,7 +208,7 @@ class MainSniperBot(SniperBot):
                 continue
 
             try:
-                self.load_extension(f'{directory}.{file.replace(".py", "")}')
+                self.load_extension(f'sniper.{directory}.{file.replace(".py", "")}')
                 logging.info(f"Loaded cog {file}")
             except Exception as e:
                 logging.critical(

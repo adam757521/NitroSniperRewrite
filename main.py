@@ -1,20 +1,18 @@
 import asyncio
 import logging
 
-from core.heroku import overwrite_heroku_values
-import sniper.constants
-from core.core import MainSniperBot
+import sniper
 
 if __name__ == "__main__":
     logging.getLogger().setLevel(logging.CRITICAL)
 
-    overwrite_heroku_values()
+    sniper.overwrite_heroku_values()
     # Adds heroku support to the program, overwrites the values in constants.py with heroku configuration.
 
     loop = asyncio.get_event_loop()
 
-    main_account = MainSniperBot(sniper.constants.Accounts.MAIN_TOKEN)
-    main_account.create_alts(sniper.constants.Accounts.ALTS)
+    main_account = sniper.MainSniperBot(sniper.Accounts.MAIN_TOKEN)
+    main_account.create_alts(sniper.Accounts.ALTS)
 
     loop.create_task(main_account.start_bot())
 

@@ -3,7 +3,7 @@ import os
 
 from selfbotUtils import NitroServerResponse
 
-from sniper.constants import Accounts, Delay, Webhook
+from .constants import Accounts, Delay, Webhook
 
 
 class InvalidHerokuConfiguration(Exception):

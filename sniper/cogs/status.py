@@ -4,8 +4,8 @@ from typing import Dict
 import discord
 from discord.ext import commands
 
-from sniper.core.nitro import CustomNitroResponse
-from sniper.core.core import MainSniperBot
+from sniper.nitro import CustomNitroResponse
+from sniper.core import MainSniperBot
 
 
 def format_code_list(cache: Dict[str, CustomNitroResponse], limit: int = 0) -> str:
@@ -21,6 +21,21 @@ def format_code_list(cache: Dict[str, CustomNitroResponse], limit: int = 0) -> s
 class Status(commands.Cog):
     def __init__(self, bot):
         self.bot: MainSniperBot = bot
+
+    @commands.command()
+    async def status(self, ctx, status_mode: str):
+        try:
+            status = discord.Status(status_mode)
+        except ValueError:
+            await ctx.send(f"Status '{status_mode}' is invalid.")
+            return
+
+        await self.bot.change_presence(status=status)
+
+        await ctx.send(embed=discord.Embed(
+            title=f"Status changed to '{status_mode}'",
+            color=0x00ff00
+        ))
 
     @commands.group(invoke_without_command=True)
     async def history(self, ctx, limit: int = 0):
