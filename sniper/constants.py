@@ -2,7 +2,7 @@ from selfbotUtils.enums import NitroServerResponse
 
 
 class Accounts:
-    MAIN_TOKEN = "mfa.tnomybWcwaE6kALcMsb8YlwYXOw4wbV80R6mv7t14oHR755zPNGz6iZAeKgGURdS71JQsNPNWkMekUYn02Xj"
+    MAIN_TOKEN = ""
     ALTS = []
 
 
