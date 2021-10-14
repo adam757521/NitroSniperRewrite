@@ -3,7 +3,7 @@ import os
 
 from selfbotUtils import NitroServerResponse
 
-import constants
+from sniper.constants import Accounts, Delay, Webhook
 
 
 class InvalidHerokuConfiguration(Exception):
@@ -31,7 +31,7 @@ def overwrite_heroku_values():
             "Settings variable does not contain valid JSON."
         )
 
-    config_classes = [constants.Accounts, constants.Delay, constants.Webhook]
+    config_classes = [Accounts, Delay, Webhook]
 
     for config_class in config_classes:
         class_name = config_class.__name__

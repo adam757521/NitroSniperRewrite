@@ -1,10 +1,9 @@
 import asyncio
 import logging
 
-import constants
-from heroku import overwrite_heroku_values
-from sniper import MainSniperBot
-
+from core.heroku import overwrite_heroku_values
+import sniper.constants
+from core.core import MainSniperBot
 
 if __name__ == "__main__":
     logging.getLogger().setLevel(logging.CRITICAL)
@@ -14,8 +13,8 @@ if __name__ == "__main__":
 
     loop = asyncio.get_event_loop()
 
-    main_account = MainSniperBot(constants.Accounts.MAIN_TOKEN)
-    main_account.create_alts(constants.Accounts.ALTS)
+    main_account = MainSniperBot(sniper.constants.Accounts.MAIN_TOKEN)
+    main_account.create_alts(sniper.constants.Accounts.ALTS)
 
     loop.create_task(main_account.start_bot())
 

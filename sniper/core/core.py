@@ -13,11 +13,10 @@ import discord
 import selfbotUtils
 from selfbotUtils import NitroServerResponse
 
-import constants
-
+from sniper.constants import Delay, Webhook
 from discord.ext import commands
 
-from nitro import CustomNitroResponse
+from .nitro import CustomNitroResponse
 
 
 class SniperBot(commands.Bot):
@@ -72,10 +71,10 @@ class SniperBot(commands.Bot):
         :rtype: None
         """
 
-        webhook_url = constants.Webhook.URL
+        webhook_url = Webhook.URL
 
         if webhook_url:
-            response_filter = constants.Webhook.FILTER
+            response_filter = Webhook.FILTER
             if (
                 response_filter
                 and response.response.server_response not in response_filter
@@ -138,9 +137,7 @@ class SniperBot(commands.Bot):
                 # response.
 
                 await asyncio.sleep(
-                    constants.Delay.DM_DELAY
-                    if not message.guild
-                    else constants.Delay.SERVER_DELAY
+                    Delay.DM_DELAY if not message.guild else Delay.SERVER_DELAY
                 )
 
                 start = time.time()

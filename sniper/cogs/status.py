@@ -4,8 +4,8 @@ from typing import Dict
 import discord
 from discord.ext import commands
 
-from nitro import CustomNitroResponse
-from sniper import MainSniperBot
+from sniper.core.nitro import CustomNitroResponse
+from sniper.core.core import MainSniperBot
 
 
 def format_code_list(cache: Dict[str, CustomNitroResponse], limit: int = 0) -> str:
