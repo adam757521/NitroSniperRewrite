@@ -7,7 +7,7 @@
       "settings": {
          "description": "Config file for sniper",
          "required": true,
-         "value": "{\n    \"Accounts\": {\n        \"MAIN_TOKEN\": \"\",\n        \"ALTS\": []\n    },\n    \"Delay\": {\n        \"DM_DELAY\": 0,\n        \"SERVER_DELAY\": 0,\n    },\n    \"Webhook\": {\n        \"URL\": \"\",\n        \"FILTER\": (),\n    }\n}"
+         "value": "{\n   \"Accounts\":{\n      \"MAIN_TOKEN\":\"\",\n      \"ALTS\":[\n         \n      ]\n   },\n   \"Delay\":{\n      \"DM_DELAY\":0,\n      \"SERVER_DELAY\":0\n   },\n   \"Webhook\":{\n      \"URL\":\"\",\n      \"FILTER\":[\n         \n      ]\n   }\n}"
       }
    }
 }
