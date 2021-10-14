@@ -1,10 +1,13 @@
 import asyncio
+import logging
 
 import constants
 from sniper import MainSniperBot
 
 
 if __name__ == "__main__":
+    logging.getLogger().setLevel(logging.CRITICAL)
+
     loop = asyncio.get_event_loop()
 
     main_account = MainSniperBot(constants.Accounts.MAIN_TOKEN)
