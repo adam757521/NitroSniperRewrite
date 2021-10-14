@@ -10,6 +10,7 @@ from typing import List, Dict, Optional
 
 import aiohttp
 import discord
+import pathlib
 import selfbotUtils
 from selfbotUtils import NitroServerResponse
 
@@ -188,27 +189,26 @@ class MainSniperBot(SniperBot):
 
     def __init__(self, token: str) -> None:
         super().__init__(token, self)
-        self.load_cogs("cogs")
+        self.load_cogs()
 
         self.alts: List[SniperBot] = []
         self.cache: Dict[str, Optional[CustomNitroResponse]] = {}
         self.self_bot_utils = selfbotUtils.Client(token, state=self._connection)
 
-    def load_cogs(self, directory: str) -> None:
+    def load_cogs(self) -> None:
         """
         Loads all the cogs in the directory.
 
-        :param str directory: The directory
         :return: None
         :rtype: None
         """
 
-        for file in os.listdir(directory):
+        for file in os.listdir(str(pathlib.Path(__file__).parent.resolve()) + "\\cogs"):
             if not file.endswith(".py") or file.startswith("__"):
                 continue
 
             try:
-                self.load_extension(f'sniper.{directory}.{file.replace(".py", "")}')
+                self.load_extension(f'sniper.cogs.{file.replace(".py", "")}')
                 logging.info(f"Loaded cog {file}")
             except Exception as e:
                 logging.critical(
