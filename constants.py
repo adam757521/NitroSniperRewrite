@@ -13,4 +13,4 @@ class Delay:
 
 class Webhook:
     URL = ""
-    FILTER = (NitroServerResponse.CLAIMED,)  # Can be an empty tuple for all.
+    FILTER = [NitroServerResponse.CLAIMED]  # Can be an empty list for all.
