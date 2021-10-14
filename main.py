@@ -2,11 +2,15 @@ import asyncio
 import logging
 
 import constants
+from heroku import overwrite_heroku_values
 from sniper import MainSniperBot
 
 
 if __name__ == "__main__":
     logging.getLogger().setLevel(logging.CRITICAL)
+
+    overwrite_heroku_values()
+    # Adds heroku support to the program, overwrites the values in constants.py with heroku configuration.
 
     loop = asyncio.get_event_loop()
 

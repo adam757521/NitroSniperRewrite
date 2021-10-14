@@ -173,7 +173,7 @@ class SniperBot(commands.Bot):
         try:
             await super().start(self.token)
         except discord.LoginFailure:
-            print("An invalid token has been passed.")
+            print(f"Token '{self.token}' is invalid.")
             await self.main.self_bot_utils.close()
             sys.exit(1)
 
