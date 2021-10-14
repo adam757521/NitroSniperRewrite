@@ -13,4 +13,4 @@ class Delay:
 
 class Webhook:
     URL = ""
-    FILTER = [NitroServerResponse.CLAIMED]  # Can be an empty list for all.
+    FILTER = [NitroServerResponse.CLAIMED]  # Can be an empty list for all, when using heroku, please set this to 6 for claimed.
