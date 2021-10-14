@@ -50,7 +50,7 @@ def overwrite_heroku_values():
                     f"Heroku settings variable does not have a '{attr}' key in '{class_name}'"
                 )
 
-            if config_class == constants.Webhook and attr == "FILTER":
+            if config_class == Webhook and attr == "FILTER":
                 config_value = [NitroServerResponse(value) for value in config_value]
 
             setattr(config_class, attr, config_value)
