@@ -40,6 +40,7 @@ Installation
 
 TODO
 -------------
+- Invite sniper (Possible)
 - Got suggestions? Create an PR!
 
 Disclaimer
