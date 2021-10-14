@@ -1,12 +1,68 @@
 from collections import Counter, defaultdict
+from typing import Dict
 
 import discord
 from discord.ext import commands
 
+from nitro import CustomNitroResponse
+from sniper import MainSniperBot
+
+
+def format_code_list(cache: Dict[str, CustomNitroResponse], limit: int = 0) -> str:
+    codes = [
+        f"{code}: {response.response.server_response}"
+        for code, response in cache.items()
+    ]
+    codes = codes[:limit] if limit else codes
+
+    return "\n".join(reversed(codes))
+
 
 class Status(commands.Cog):
     def __init__(self, bot):
-        self.bot = bot
+        self.bot: MainSniperBot = bot
+
+    @commands.group(invoke_without_command=True)
+    async def history(self, ctx, limit: int = 0):
+        await ctx.send(
+            embed=discord.Embed(
+                title="Code History",
+                description=format_code_list(self.bot.cache, limit)[:1024],
+                color=0x00FF00,
+            )
+        )
+
+    @history.command()
+    async def user(self, ctx, user: discord.User):
+        await ctx.send(
+            embed=discord.Embed(
+                title=f"Code History of {user}",
+                description=format_code_list(
+                    {
+                        code: response
+                        for code, response in self.bot.cache.items()
+                        if response and response.message.author == user
+                    }
+                )[:1024],
+                color=0x00FF00,
+            )
+        )
+
+    @history.command()
+    async def guild(self, ctx, guild: discord.Guild):
+        await ctx.send(
+            embed=discord.Embed(
+                title=f"Code History of {guild}",
+                description=format_code_list(
+                    {
+                        code: response
+                        for code, response in self.bot.cache.items()
+                        if response and response.message.guild == guild
+                    }
+                )[:1024],
+                color=0x00FF00,
+            )
+        )
 
     @commands.command()
     async def lookup(self, ctx, code: str):
@@ -53,7 +109,7 @@ class Status(commands.Cog):
     async def accounts(self, ctx):
         embed = discord.Embed(
             title="Connected Accounts.",
-            description="Shows a list of connected accounts.",
+            description=f"Shows a list of connected accounts.\nTotal guilds: {sum([len(self.bot.guilds)] + [len(alt.guilds) for alt in self.bot.alts])}",
             color=0x00FF00,
         )
 
@@ -65,14 +121,14 @@ class Status(commands.Cog):
 
         embed.add_field(
             name=f"Main Account {self.bot.user.id}",
-            value=f"Tag: {self.bot.user}\nAPI Calls: {len(user_information[self.bot.user])}",
+            value=f"Tag: {self.bot.user}\nAPI Calls: {len(user_information[self.bot.user])}\nGuilds: {len(self.bot.guilds)}",
             inline=False,
         )
 
         for alt in self.bot.alts:
             embed.add_field(
                 name=f"Alt Account {alt.user.id}",
-                value=f"Tag: {alt.user}\nAPI Calls: {len(user_information[alt.user])}",
+                value=f"Tag: {alt.user}\nAPI Calls: {len(user_information[alt.user])}\nGuilds: {len(alt.guilds)}",
                 inline=False,
             )
 
