@@ -1,0 +1,13 @@
+{
+   "name": "Nitro Sniper Rewrite",
+   "description": "A discord nitro sniper.",
+   "repository": "https://github.com/adam757521/NitroSniperRewrite",
+   "logo": "https://discord.com/assets/2c21aeda16de354ba5334551a883b481.png",
+   "env": {
+      "settings": {
+         "description": "Config file for sniper",
+         "required": true,
+         "value": "{\n    \"Accounts\": {\n        \"MAIN_TOKEN\": \"\",\n        \"ALTS\": []\n    },\n    \"Delay\": {\n        \"DM_DELAY\": 0,\n        \"SERVER_DELAY\": 0,\n    },\n    \"Webhook\": {\n        \"URL\": \"\",\n        \"FILTER\": (),\n    }\n}"
+      }
+   }
+}
