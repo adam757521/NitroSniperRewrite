@@ -24,7 +24,7 @@ Installation
 -------------
 ### Heroku: ###
 
-  [![Deploy to heroku](https://www.herokucdn.com/deploy/button.svg)](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
+  [![Deploy to heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/adam757521/NitroSniperRewrite/tree/main)
 
   `DEPLOY TO HEROKU HAS BEEN REMOVED DUE TO HEAVY ABUSE, KEEP IN MIND THIS PROJECT IS FOR EDUCATIONAL PURPOSES AND WAS NOT MEANT TO VIOLATE THE DISCORD TOS.`
   
