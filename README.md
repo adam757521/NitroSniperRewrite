@@ -36,7 +36,7 @@ Installation
   - Make sure python is installed.
   - Install the dependencies using `python -m pip install -r requirements.txt` 
   - Change the `constants.py` file to your liking.
-  - Run the sniper using `python main.py`
+  - Run the sniper using `python launcher.py`
 
 TODO
 -------------
