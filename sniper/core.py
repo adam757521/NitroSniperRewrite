@@ -19,6 +19,8 @@ from discord.ext import commands
 
 from .nitro import CustomNitroResponse
 
+__all__ = ("SniperBot", "MainSniperBot")
+
 
 class SniperBot(commands.Bot):
     """

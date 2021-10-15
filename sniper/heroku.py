@@ -5,6 +5,8 @@ from selfbotUtils import NitroServerResponse
 
 from .constants import Accounts, Delay, Webhook
 
+__all__ = ("InvalidHerokuConfiguration", "get_class_config_attributes", "overwrite_heroku_values")
+
 
 class InvalidHerokuConfiguration(Exception):
     """
