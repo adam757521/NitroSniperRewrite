@@ -24,7 +24,9 @@ Installation
 -------------
 ### Heroku: ###
 
-  [![Deploy to heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/adam757521/NitroSniperRewrite/tree/master)
+  [![Deploy to heroku](https://www.herokucdn.com/deploy/button.svg)]()
+
+  Removed due to abuse, for more information, [click here](https://heroku.com/deploy?template=https://github.com/adam757521/NitroSniperRewrite/tree/master).
   
   - Turn on the worker dyno.
   - Change the settings env to your liking.
