@@ -42,7 +42,7 @@ class Status(commands.Cog):
         await ctx.send(
             embed=discord.Embed(
                 title="Code History",
-                description=format_code_list(self.bot.cache, limit)[:1024],
+                description=format_code_list(self.bot.cache, limit)[:4096],
                 color=0x00FF00,
             )
         )
@@ -58,7 +58,7 @@ class Status(commands.Cog):
                         for code, response in self.bot.cache.items()
                         if response and response.message.author == user
                     }
-                )[:1024],
+                )[:4096],
                 color=0x00FF00,
             )
         )
@@ -74,7 +74,7 @@ class Status(commands.Cog):
                         for code, response in self.bot.cache.items()
                         if response and response.message.guild == guild
                     }
-                )[:1024],
+                )[:4096],
                 color=0x00FF00,
             )
         )
