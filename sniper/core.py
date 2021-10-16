@@ -135,9 +135,23 @@ class SniperBot(commands.Bot):
                     webhook_url, adapter=discord.AsyncWebhookAdapter(session)
                 )
                 await webhook.send(embed=embed)
-
+    
     @staticmethod
-    def find_account_to_redeem_on(accounts: List[SniperBot]) -> Optional[SniperBot]:
+    async def check_phonebanned(account: SniperBot) -> None:
+        """
+        |coro|
+
+        Ensures the account.phone_banned value is correct.
+        Tries to redeem an invalid gift.
+
+        :param SniperBot account: The account.
+        :return: None
+        :rtype: None
+        """
+
+        account.phone_banned = (await account.self_bot_utils.redeem_gift("a")).server_response == NitroServerResponse.NOT_VERIFIED 
+
+    def find_account_to_redeem_on(self, accounts: List[SniperBot]) -> Optional[SniperBot]:
         """
         Returns a suitable account to redeem gifts on.
 
@@ -148,6 +162,8 @@ class SniperBot(commands.Bot):
 
         for account in accounts:
             if account.phone_banned:
+                self.loop.create_task(self.check_phonebanned(account))
+
                 continue
 
             if account.cooldown_until > time.time():
@@ -181,7 +197,7 @@ class SniperBot(commands.Bot):
         if response.response.server_response == NitroServerResponse.NOT_VERIFIED:
             account.phone_banned = True
 
-        if response.response.server_response != NitroServerResponse.CLAIMED:
+        if response.response.server_response == NitroServerResponse.CLAIMED:
             account.nitro_claimed += 1
             if Cooldown.NITRO_COOLDOWN and account.nitro_claimed % Cooldown.NITRO_COOLDOWN == 0:
                 account.cooldown_until = time.time() + (Cooldown.NITRO_COOLDOWN_HOURS * 60 * 60)
