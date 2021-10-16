@@ -5,9 +5,9 @@ from typing import Dict
 import discord
 from discord.ext import commands
 
-from sniper.converters import StatusConverter
-from sniper.nitro import CustomNitroResponse
-from sniper.core import MainSniperBot
+from ..converters import StatusConverter
+from ..nitro import CustomNitroResponse
+from ..core import MainSniperBot
 
 
 def format_code_list(cache: Dict[str, CustomNitroResponse], limit: int = 0) -> str:
@@ -87,9 +87,7 @@ class Status(commands.Cog):
     @status.command()
     async def alts(self, ctx, status: StatusConverter):
         self.bot.loop.create_task(
-            self.gather(
-                *[alt.change_presence(status=status) for alt in self.bot.alts]
-            )
+            self.gather(*[alt.change_presence(status=status) for alt in self.bot.alts])
         )
 
         await ctx.send(
