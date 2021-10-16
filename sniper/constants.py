@@ -18,6 +18,12 @@ class Delay:
     SERVER_DELAY = 0
 
 
+class Cooldown:
+    NITRO_COOLDOWN = 2  # Can be None if you want to ignore cooldowns.
+    NITRO_COOLDOWN_HOURS = 24
+    REDEEM_ON_ALT = True
+
+
 class Webhook:
     URL = ""
     FILTER = [
