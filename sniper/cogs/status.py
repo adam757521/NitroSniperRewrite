@@ -4,6 +4,7 @@ from typing import Dict
 import discord
 from discord.ext import commands
 
+from sniper.converters import StatusConverter
 from sniper.nitro import CustomNitroResponse
 from sniper.core import MainSniperBot
 
@@ -22,20 +23,71 @@ class Status(commands.Cog):
     def __init__(self, bot):
         self.bot: MainSniperBot = bot
 
-    @commands.command()
-    async def status(self, ctx, status_mode: str):
-        try:
-            status = discord.Status(status_mode)
-        except ValueError:
-            await ctx.send(f"Status '{status_mode}' is invalid.")
+    @commands.group(invoke_without_command=True)
+    async def status(self, ctx, user_id: int, status: StatusConverter):
+        bots = self.bot.alts
+        bots.insert(0, self.bot)
+
+        target = next((bot for bot in bots if bot.user.id == user_id), None)
+        if not target:
+            await ctx.send(
+                embed=discord.Embed(
+                    title="Target account not found",
+                    description=f"ID {user_id} is not found.",
+                    color=0xFF0000,
+                )
+            )
             return
+
+        await target.change_presence(status=status)
+
+        await ctx.send(
+            embed=discord.Embed(
+                title=f"Status changed.",
+                description=f"Status of {target.user} changed to {status}.",
+                color=0x00FF00,
+            )
+        )
+
+    @status.command()
+    async def main(self, ctx, status: StatusConverter):
+        await self.bot.change_presence(status=status)
+
+        await ctx.send(
+            embed=discord.Embed(
+                title="Status changed.",
+                description=f"Changed status of main account to {status}",
+                color=0x00FF00,
+            )
+        )
+
+    @status.command()
+    async def all(self, ctx, status: StatusConverter):
+        for alt in self.bot.alts:
+            await alt.change_presence(status=status)
 
         await self.bot.change_presence(status=status)
 
-        await ctx.send(embed=discord.Embed(
-            title=f"Status changed to '{status_mode}'",
-            color=0x00ff00
-        ))
+        await ctx.send(
+            embed=discord.Embed(
+                title="Status changed.",
+                description=f"Changed status of all accounts to {status}",
+                color=0x00FF00,
+            )
+        )
+
+    @status.command()
+    async def alts(self, ctx, status: StatusConverter):
+        for alt in self.bot.alts:
+            await alt.change_presence(status=status)
+
+        await ctx.send(
+            embed=discord.Embed(
+                title="Status changed.",
+                description=f"Changed status of alt accounts to {status}",
+                color=0x00FF00,
+            )
+        )
 
     @commands.group(invoke_without_command=True)
     async def history(self, ctx, limit: int = 0):

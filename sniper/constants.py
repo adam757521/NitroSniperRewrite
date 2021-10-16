@@ -1,9 +1,16 @@
+import discord
 from selfbotUtils.enums import NitroServerResponse
+
+from .enums import StatusType
 
 
 class Accounts:
     MAIN_TOKEN = ""
     ALTS = []
+    AUTOMATIC_STATUS_TYPE = (
+        StatusType.ALTS
+    )  # Can be ALL, ALTS and MAIN. Can also be None to disable this feature.
+    AUTOMATIC_STATUS = discord.Status.online
 
 
 class Delay:
