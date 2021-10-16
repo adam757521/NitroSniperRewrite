@@ -1,3 +1,4 @@
+import asyncio
 from collections import Counter, defaultdict
 from typing import Dict
 
@@ -63,10 +64,7 @@ class Status(commands.Cog):
 
     @status.command()
     async def all(self, ctx, status: StatusConverter):
-        for alt in self.bot.alts:
-            await alt.change_presence(status=status)
-
-        await self.bot.change_presence(status=status)
+        await asyncio.gather(self.bot.change_presence(status=status), *[alt.change_presence(status=status) for alt in self.bot.alts])
 
         await ctx.send(
             embed=discord.Embed(
@@ -78,8 +76,7 @@ class Status(commands.Cog):
 
     @status.command()
     async def alts(self, ctx, status: StatusConverter):
-        for alt in self.bot.alts:
-            await alt.change_presence(status=status)
+        await asyncio.gather(*[alt.change_presence(status=status) for alt in self.bot.alts])
 
         await ctx.send(
             embed=discord.Embed(
