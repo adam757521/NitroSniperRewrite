@@ -268,7 +268,6 @@ class MainSniperBot(SniperBot):
     __slots__ = (
         "cache",
         "alts",
-        "self_bot_utils",  # The selfbotUtils client that redeems codes.
     )
 
     def __init__(self, token: str) -> None:
