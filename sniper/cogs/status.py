@@ -71,8 +71,7 @@ class Status(commands.Cog):
     async def all(self, ctx, status: StatusConverter):
         self.bot.loop.create_task(
             self.gather(
-                self.bot.change_presence(status=status),
-                *[alt.change_presence(status=status) for alt in self.bot.alts],
+                *[bot.change_presence(status=status) for bot in self.bot.bots],
             )
         )
 
@@ -185,7 +184,7 @@ class Status(commands.Cog):
     async def accounts(self, ctx):
         embed = discord.Embed(
             title="Connected Accounts.",
-            description=f"Shows a list of connected accounts.\nTotal guilds: {sum([len(self.bot.guilds)] + [len(alt.guilds) for alt in self.bot.alts])}",
+            description=f"Shows a list of connected accounts.\nTotal guilds: {sum([len(bot.guilds) for bot in self.bot.bots])}",
             color=0x00FF00,
         )
 
