@@ -8,9 +8,9 @@ class Accounts:
     MAIN_TOKEN = ""
     ALTS = []
     AUTOMATIC_STATUS_TYPE = (
-        StatusType.ALTS
+        StatusType.ALL
     )  # Can be ALL, ALTS and MAIN. Can also be None to disable this feature.
-    AUTOMATIC_STATUS = discord.Status.online
+    AUTOMATIC_STATUS = discord.Status.offline
 
 
 class Delay:
