@@ -24,6 +24,10 @@ class Status(commands.Cog):
     def __init__(self, bot):
         self.bot: MainSniperBot = bot
 
+    @staticmethod
+    async def gather(*tasks):
+        await asyncio.gather(*tasks)
+
     @commands.group(invoke_without_command=True)
     async def status(self, ctx, user_id: int, status: StatusConverter):
         bots = self.bot.alts
@@ -41,7 +45,7 @@ class Status(commands.Cog):
             return
 
         self.bot.loop.create_task(target.change_presence(status=status))
-        # Made it create_task incase we are ratelimited.
+        # Made it create_task in case we are ratelimited.
 
         await ctx.send(
             embed=discord.Embed(
@@ -66,7 +70,7 @@ class Status(commands.Cog):
     @status.command()
     async def all(self, ctx, status: StatusConverter):
         self.bot.loop.create_task(
-            asyncio.gather(
+            self.gather(
                 self.bot.change_presence(status=status),
                 *[alt.change_presence(status=status) for alt in self.bot.alts],
             )
@@ -83,7 +87,7 @@ class Status(commands.Cog):
     @status.command()
     async def alts(self, ctx, status: StatusConverter):
         self.bot.loop.create_task(
-            asyncio.gather(
+            self.gather(
                 *[alt.change_presence(status=status) for alt in self.bot.alts]
             )
         )
