@@ -60,9 +60,7 @@ class SniperBot(commands.Bot):
 
         return codes
 
-    async def on_ready(self):
-        print(f"{self.user} is ready.")
-
+    async def on_connect(self):
         if (
             Accounts.AUTOMATIC_STATUS_TYPE == StatusType.ALL
             or Accounts.AUTOMATIC_STATUS_TYPE == StatusType.MAIN
@@ -72,14 +70,8 @@ class SniperBot(commands.Bot):
         ):
             await self.change_presence(status=Accounts.AUTOMATIC_STATUS)
 
-        # status = Accounts.AUTOMATIC_STATUS
-        #
-        # if Accounts.AUTOMATIC_STATUS_TYPE == StatusType.all:
-        #     await self.change_presence(status=status)
-        # elif Accounts.AUTOMATIC_STATUS_TYPE == StatusType.MAIN and self.main == self:
-        #     await self.change_presence(status=status)
-        # elif Accounts.AUTOMATIC_STATUS_TYPE == StatusType.ALTS and self in self.main.alts:
-        #     await self.change_presence(status=status)
+    async def on_ready(self):
+        print(f"{self.user} is ready.")
 
     @staticmethod
     async def send_webhook_alert(response: CustomNitroResponse) -> None:
