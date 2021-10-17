@@ -72,7 +72,7 @@ class SniperBot(commands.Bot):
             or Accounts.AUTOMATIC_STATUS_TYPE == StatusType.ALTS
             and self in self.main.alts
         ):
-            await self.change_presence(status=Accounts.AUTOMATIC_STATUS)
+            await self.change_presence(status=Accounts.AUTOMATIC_STATUS, afk=Accounts.AFK)
 
     async def on_ready(self):
         print(f"{self.user} is ready.")
