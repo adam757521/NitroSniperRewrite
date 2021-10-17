@@ -120,6 +120,12 @@ class SniperBot(commands.Bot):
             embed.add_field(name="Receiver", value=str(response.receiver), inline=False)
 
             embed.add_field(
+                name="Redeemer",
+                value=str(response.redeemer.user),
+                inline=False
+            )
+
+            embed.add_field(
                 name="Response Time",
                 value=f"{round(response.request_time * 1000)}ms",
                 inline=False,
@@ -191,7 +197,7 @@ class SniperBot(commands.Bot):
         code_response = await account.self_bot_utils.redeem_gift(code)
 
         response = CustomNitroResponse(
-            code_response, message, time.time() - start, self.user
+            code_response, message, time.time() - start, self.user, account
         )
 
         if response.response.server_response == NitroServerResponse.NOT_VERIFIED:
