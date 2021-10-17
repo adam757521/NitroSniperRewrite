@@ -2,9 +2,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from sniper import SniperBot
-
 if TYPE_CHECKING:
+    from .core import SniperBot
     from selfbotUtils.nitro import NitroResponse
     import discord
 
