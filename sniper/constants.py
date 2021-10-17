@@ -11,6 +11,7 @@ class Accounts:
         StatusType.ALL
     )  # Can be ALL, ALTS and MAIN. Can also be None to disable this feature.
     AUTOMATIC_STATUS = discord.Status.offline
+    AFK = True
 
 
 class Delay:
