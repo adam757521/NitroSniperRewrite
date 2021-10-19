@@ -45,7 +45,9 @@ class Status(commands.Cog):
             )
             return
 
-        self.bot.loop.create_task(target.change_presence(status=status, afk=Accounts.AFK))
+        self.bot.loop.create_task(
+            target.change_presence(status=status, afk=Accounts.AFK)
+        )
         # Made it create_task in case we are ratelimited.
 
         await ctx.send(
@@ -58,7 +60,9 @@ class Status(commands.Cog):
 
     @status.command()
     async def main(self, ctx, status: StatusConverter):
-        self.bot.loop.create_task(self.bot.change_presence(status=status, afk=Accounts.AFK))
+        self.bot.loop.create_task(
+            self.bot.change_presence(status=status, afk=Accounts.AFK)
+        )
 
         await ctx.send(
             embed=discord.Embed(
@@ -72,7 +76,10 @@ class Status(commands.Cog):
     async def all(self, ctx, status: StatusConverter):
         self.bot.loop.create_task(
             self.gather(
-                *[bot.change_presence(status=status, afk=Accounts.AFK) for bot in self.bot.bots],
+                *[
+                    bot.change_presence(status=status, afk=Accounts.AFK)
+                    for bot in self.bot.bots
+                ],
             )
         )
 
@@ -87,7 +94,12 @@ class Status(commands.Cog):
     @status.command()
     async def alts(self, ctx, status: StatusConverter):
         self.bot.loop.create_task(
-            self.gather(*[alt.change_presence(status=status, afk=Accounts.AFK) for alt in self.bot.alts])
+            self.gather(
+                *[
+                    alt.change_presence(status=status, afk=Accounts.AFK)
+                    for alt in self.bot.alts
+                ]
+            )
         )
 
         await ctx.send(

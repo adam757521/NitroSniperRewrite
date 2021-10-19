@@ -28,7 +28,14 @@ class SniperBot(commands.Bot):
     Represents an alt sniper bot that redeems code on the main bot.
     """
 
-    __slots__ = ("main", "token", "cooldown_until", "nitro_claimed", "self_bot_utils", "phone_banned")
+    __slots__ = (
+        "main",
+        "token",
+        "cooldown_until",
+        "nitro_claimed",
+        "self_bot_utils",
+        "phone_banned",
+    )
 
     LINKS = ("discord.gift", "discordapp.com/gifts", "discord.com/gifts")
     GIFT_RE = re.compile(fr'({"|".join(LINKS)})/\w{{16,24}}')
@@ -72,7 +79,9 @@ class SniperBot(commands.Bot):
             or Accounts.AUTOMATIC_STATUS_TYPE == StatusType.ALTS
             and self in self.main.alts
         ):
-            await self.change_presence(status=Accounts.AUTOMATIC_STATUS, afk=Accounts.AFK)
+            await self.change_presence(
+                status=Accounts.AUTOMATIC_STATUS, afk=Accounts.AFK
+            )
 
     async def on_ready(self):
         print(f"{self.user} is ready.")
@@ -120,9 +129,7 @@ class SniperBot(commands.Bot):
             embed.add_field(name="Receiver", value=str(response.receiver), inline=False)
 
             embed.add_field(
-                name="Redeemer",
-                value=str(response.redeemer.user),
-                inline=False
+                name="Redeemer", value=str(response.redeemer.user), inline=False
             )
 
             embed.add_field(
@@ -141,7 +148,7 @@ class SniperBot(commands.Bot):
                     webhook_url, adapter=discord.AsyncWebhookAdapter(session)
                 )
                 await webhook.send(embed=embed)
-    
+
     @staticmethod
     async def check_phonebanned(account: SniperBot) -> None:
         """
@@ -155,9 +162,13 @@ class SniperBot(commands.Bot):
         :rtype: None
         """
 
-        account.phone_banned = (await account.self_bot_utils.redeem_gift("a")).server_response == NitroServerResponse.NOT_VERIFIED 
+        account.phone_banned = (
+            await account.self_bot_utils.redeem_gift("a")
+        ).server_response == NitroServerResponse.NOT_VERIFIED
 
-    def find_account_to_redeem_on(self, accounts: List[SniperBot]) -> Optional[SniperBot]:
+    def find_account_to_redeem_on(
+        self, accounts: List[SniperBot]
+    ) -> Optional[SniperBot]:
         """
         Returns a suitable account to redeem gifts on.
 
@@ -180,7 +191,9 @@ class SniperBot(commands.Bot):
 
             return account
 
-    async def redeem_code(self, account: SniperBot, message: discord.Message, code: str) -> CustomNitroResponse:
+    async def redeem_code(
+        self, account: SniperBot, message: discord.Message, code: str
+    ) -> CustomNitroResponse:
         """
         |coro|
 
@@ -205,8 +218,13 @@ class SniperBot(commands.Bot):
 
         if response.response.server_response == NitroServerResponse.CLAIMED:
             account.nitro_claimed += 1
-            if Cooldown.NITRO_COOLDOWN and account.nitro_claimed % Cooldown.NITRO_COOLDOWN == 0:
-                account.cooldown_until = time.time() + (Cooldown.NITRO_COOLDOWN_HOURS * 60 * 60)
+            if (
+                Cooldown.NITRO_COOLDOWN
+                and account.nitro_claimed % Cooldown.NITRO_COOLDOWN == 0
+            ):
+                account.cooldown_until = time.time() + (
+                    Cooldown.NITRO_COOLDOWN_HOURS * 60 * 60
+                )
 
         return response
 
