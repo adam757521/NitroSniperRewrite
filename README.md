@@ -6,6 +6,7 @@
 
 <p align="center">
    A discord nitro code sniper written in python, using selfbotUtils, that does not phoneban!
+   Note: Does not work anymore. Wait for new self-bot support.
 </p>
 
 Features
